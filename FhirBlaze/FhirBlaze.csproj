@@ -23,6 +23,7 @@
     <ProjectReference Include="..\FhirBlaze.PractitionerModule\FhirBlaze.PractitionerModule.csproj" />
     <ProjectReference Include="..\FhirBlaze.MedicationModule\FhirBlaze.MedicationModule.csproj" />
     <ProjectReference Include="..\FhirBlaze.ObservationModule\FhirBlaze.ObservationModule.csproj" />
+    <ProjectReference Include="..\FhirBlaze.AllergyIntoleranceModule\FhirBlaze.AllergyIntoleranceModule.csproj" />
     <ProjectReference Include="..\FhirBlaze.QuestionnaireModule\FhirBlaze.QuestionnaireModule.csproj" />
     <ProjectReference Include="..\FhirBlaze.SharedComponents\FhirBlaze.SharedComponents.csproj" />
   </ItemGroup>

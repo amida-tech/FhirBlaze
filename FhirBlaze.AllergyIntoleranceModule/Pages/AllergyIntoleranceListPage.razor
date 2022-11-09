@@ -1,0 +1,25 @@
+@page "/allergyintolerances"
+@using FhirBlaze.AllergyIntoleranceModule.Components
+
+@namespace FhirBlaze.AllergyIntoleranceModule.Pages
+
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">Allergy Intolerances</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+      <button @onclick="AddAllergyIntoleranceClicked" class="btn btn-primary">Add Allergy Intolerance</button>
+      <button @onclick="(() => ShowSearch = !ShowSearch)" class="btn btn-primary">
+        @(ShowSearch ? "Close Search" : "Open Search")
+      </button>
+    </li>
+  </ul>
+</nav>
+
+@if (ShowSearch)
+{
+  @* <AllergyIntoleranceSearchComponent SearchClicked="SearchAllergyIntolerance" /> *@
+}
+
+<CascadingValue Value="AllergyIntolerances">
+  <AllergyIntoleranceListComponent OnAllergyIntoleranceSelected="AllergyIntoleranceSelected" />
+</CascadingValue>

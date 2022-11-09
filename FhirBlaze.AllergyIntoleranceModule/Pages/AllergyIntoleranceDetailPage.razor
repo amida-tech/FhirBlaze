@@ -1,0 +1,11 @@
+@page "/allergyintolerance"
+@page "/allergyintolerance/{Id}"
+
+@using FhirBlaze.AllergyIntoleranceModule.Components
+
+@namespace FhirBlaze.AllergyIntoleranceModule.Pages
+
+<CascadingValue Value="SelectedAllergyIntolerance">
+  <AllergyIntoleranceDetailComponent IsEditable="true" Patients="Patients" Practitioners="Practitioners"
+    OnAllergyIntoleranceSaved="SaveAllergyIntolerance" />
+</CascadingValue>

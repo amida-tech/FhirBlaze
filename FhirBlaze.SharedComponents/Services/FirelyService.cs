@@ -294,6 +294,74 @@ namespace FhirBlaze.SharedComponents.Services
     }
     #endregion
 
+    #region AllergyIntolerance
+    public async Task<IList<AllergyIntolerance>> GetAllergyIntolerancesAsync()
+    {
+      var bundle = await _fhirClient.SearchAsync<AllergyIntolerance>(pageSize: 50);
+      var result = new List<AllergyIntolerance>();
+      while (bundle != null)
+      {
+        result.AddRange(bundle.Entry.Select(a => (AllergyIntolerance)a.Resource).ToList());
+        bundle = await _fhirClient.ContinueAsync(bundle);
+      }
+
+      return result;
+    }
+
+    public async Task<int> GetAllergyIntoleranceCountAsync()
+    {
+      var bundle = await _fhirClient.SearchAsync<AllergyIntolerance>(summary: SummaryType.Count);
+      return bundle.Total ?? 0;
+    }
+
+    public async Task<IList<AllergyIntolerance>> SearchAllergyIntolerance(IDictionary<string, string> searchParameters)
+    {
+      string identifier = searchParameters["identifier"];
+
+      var searchResults = new List<AllergyIntolerance>();
+
+      if (!string.IsNullOrEmpty(identifier))
+      {
+        Bundle bundle = await _fhirClient.SearchByIdAsync<AllergyIntolerance>(identifier);
+
+        if (bundle != null)
+          searchResults = bundle.Entry.Select(a => (AllergyIntolerance)a.Resource).ToList();
+      }
+      else
+      {
+        IList<string> filterStrings = new List<string>();
+        foreach (var parameter in searchParameters)
+        {
+          if (!string.IsNullOrEmpty(parameter.Value))
+          {
+            filterStrings.Add($"{parameter.Key}:contains={parameter.Value}");
+          }
+        }
+        Bundle bundle = await _fhirClient.SearchAsync<AllergyIntolerance>(criteria: filterStrings.ToArray<string>());
+
+        if (bundle != null)
+          searchResults = bundle.Entry.Select(a => (AllergyIntolerance)a.Resource).ToList();
+      }
+
+      return searchResults;
+    }
+
+    public async Task<AllergyIntolerance> CreateAllergyIntolerancesAsync(AllergyIntolerance allergyIntolerance)
+    {
+      return await _fhirClient.CreateAsync(allergyIntolerance);
+    }
+
+    public async Task<AllergyIntolerance> UpdateAllergyIntoleranceAsync(string allergyIntoleranceId, AllergyIntolerance allergyIntolerance)
+    {
+      if (allergyIntoleranceId != allergyIntolerance.Id)
+      {
+        throw new System.Exception("Unknown allergyIntolerance ID");
+      }
+
+      return await _fhirClient.UpdateAsync(allergyIntolerance);
+    }
+    #endregion
+
     #region Questionnaire
     public async Task<IList<Questionnaire>> GetQuestionnairesAsync()
     {

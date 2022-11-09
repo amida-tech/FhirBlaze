@@ -40,6 +40,14 @@ namespace FhirBlaze.SharedComponents.Services
     Task<IList<Observation>> SearchObservation(IDictionary<string, string> searchParameters);
     #endregion
 
+    #region AllergyIntolerance
+    Task<AllergyIntolerance> CreateAllergyIntolerancesAsync(AllergyIntolerance allergyIntolerance);
+    Task<IList<AllergyIntolerance>> GetAllergyIntolerancesAsync();
+    Task<AllergyIntolerance> UpdateAllergyIntoleranceAsync(string allergyIntoleranceId, AllergyIntolerance allergyIntolerance);
+    Task<int> GetAllergyIntoleranceCountAsync();
+    Task<IList<AllergyIntolerance>> SearchAllergyIntolerance(IDictionary<string, string> searchParameters);
+    #endregion
+
     #region Questionnaire
     Task<QuestionnaireResponse> SaveQuestionnaireResponseAsync(QuestionnaireResponse qResponse);
     Task<IList<Questionnaire>> GetQuestionnairesAsync();

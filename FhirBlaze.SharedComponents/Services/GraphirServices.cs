@@ -46,6 +46,11 @@ namespace FhirBlaze.SharedComponents.Services
       throw new NotImplementedException();
     }
 
+    public Task<AllergyIntolerance> CreateAllergyIntolerancesAsync(AllergyIntolerance allergyIntolerance)
+    {
+      throw new NotImplementedException();
+    }
+
     public Task<Practitioner> CreatePractitionersAsync(Practitioner practitioner)
     {
       throw new NotImplementedException();
@@ -72,6 +77,11 @@ namespace FhirBlaze.SharedComponents.Services
     }
 
     public Task<int> GetObservationCountAsync()
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task<int> GetAllergyIntoleranceCountAsync()
     {
       throw new NotImplementedException();
     }
@@ -186,6 +196,32 @@ namespace FhirBlaze.SharedComponents.Services
       }
       return result;
     }
+    public async Task<IList<AllergyIntolerance>> GetAllergyIntolerancesAsync()
+    {
+      GraphQLRequest request = new GraphQLRequest(_httpClient)
+      {
+        OperationName = "AllergyIntoleranceList",
+        Query = @"query {
+                    AllergyIntoleranceList{
+                        identifier{value}
+                    }
+                }"
+      };
+      GraphQLResponse response = await request.PostAsync();
+      var result = new List<AllergyIntolerance>();
+      foreach (var p in response.Data.AllergyIntoleranceList)
+      {
+        try
+        {
+          result.Add(_fhirParser.Parse<AllergyIntolerance>(p.RootElement.ToString()));
+        }
+        catch (Exception e)
+        {
+
+        }
+      }
+      return result;
+    }
 
     public Task<int> GetPractitionerCountAsync()
     {
@@ -274,6 +310,11 @@ namespace FhirBlaze.SharedComponents.Services
       throw new NotImplementedException();
     }
 
+    public Task<IList<AllergyIntolerance>> SearchAllergyIntolerance(IDictionary<string, string> searchParameters)
+    {
+      throw new NotImplementedException();
+    }
+
     public Task<IList<Practitioner>> SearchPractitioner(IDictionary<string, string> searchParameters)
     {
       throw new NotImplementedException();
@@ -300,6 +341,11 @@ namespace FhirBlaze.SharedComponents.Services
     }
 
     public Task<Observation> UpdateObservationAsync(string observationId, Observation observation)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task<AllergyIntolerance> UpdateAllergyIntoleranceAsync(string allergyIntoloranceId, AllergyIntolerance allergyIntolerance)
     {
       throw new NotImplementedException();
     }
